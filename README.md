@@ -1,6 +1,6 @@
 <h1 align="center">Express - TanyaJawab REST API</h1>
 
-This API is created by me to make backend job more easier. With this boilerplate, you can free to use, change, and add any request that you need for your backend website. This API use Express as Nodejs framework and MySQL as store database. [More about Express](https://en.wikipedia.org/wiki/Express.js)
+This API is created to make TanyaJawab app backend. In this API, many routes will be connected to frontend like authentication, CRUD method and additional function that make this app better. This API used with Express as NodeJs framework, and MySQL as database server. [More about Express](https://en.wikipedia.org/wiki/Express.js)
 
 ## Built With
 
