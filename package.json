@@ -1,7 +1,7 @@
 {
-  "name": "backend-boilerplate",
+  "name": "tanyajawab-backend",
   "version": "1.0.0",
-  "description": "Backend Boilerplate",
+  "description": "TanyaJawab Backend",
   "main": "server.js",
   "scripts": {
     "dev": "npx nodemon ./src/server.js"

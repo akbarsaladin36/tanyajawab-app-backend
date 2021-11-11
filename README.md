@@ -1,4 +1,4 @@
-<h1 align="center">Express - Backend Boilerplate with MySQL</h1>
+<h1 align="center">Express - TanyaJawab REST API</h1>
 
 This API is created by me to make backend job more easier. With this boilerplate, you can free to use, change, and add any request that you need for your backend website. This API use Express as Nodejs framework and MySQL as store database. [More about Express](https://en.wikipedia.org/wiki/Express.js)
 
@@ -24,7 +24,7 @@ This API is created by me to make backend job more easier. With this boilerplate
 5. Create a database with the name #nama_database, and Import file sql to **phpmyadmin**
 6. Open Postman desktop application or Chrome web app extension that has installed before
 7. Choose HTTP Method and enter request url.(ex. localhost:3000/)
-8. You can see all the end point [here](https://documenter.getpostman.com/view/14780095/TzzBpFnu)
+8. You can see all the end point [here](https://documenter.getpostman.com/view/14780095/UVC6jSLe)
 9. Type `npm run dev` to activated the server.
 
 ## Set up .env file
@@ -44,7 +44,13 @@ SMTP_PASSWORD = <YOUR PASSWORD>
 
 ## Feature
 
-1. Login and Register API
+1. Login and Register
+2. Get One User
+3. Search, Update and Delete User
+4. Get All Question 
+5. Create, Update, and Delete Question 
+6. Create, Update and Delete Answer
+
 
 ## License
 

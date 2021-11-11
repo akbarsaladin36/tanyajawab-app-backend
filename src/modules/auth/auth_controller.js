@@ -8,7 +8,7 @@ require('dotenv').config()
 module.exports = {
   register: async (req, res) => {
     try {
-      const { userEmail, userName, userPassword } = req.body
+      const { userEmail, userUsername, userPassword } = req.body
       const checkEmailUser = authModel.getUserDataCondition({
         user_email: userEmail
       })
@@ -24,7 +24,7 @@ module.exports = {
         const encryptPassword = bcrypt.hashSync(userPassword, salt)
         const setData = {
           user_email: userEmail,
-          user_username: userName,
+          user_username: userUsername,
           user_password: encryptPassword,
           user_image: '',
           user_verify: 'N'
@@ -43,10 +43,10 @@ module.exports = {
         })
 
         const mailOptions = {
-          from: '"Test Admin" <admin-test.gmail.com>',
+          from: '"Admin" <tanyaJawab_admin@gmail.com>',
           to: result.user_email,
-          subject: 'Project App- Activation Email',
-          html: `<b>Congratulation! Now you can activate your account now. Please click this link to activate it.</b><a href="http://localhost:3006/backend6/api/v1/auth/user-activation/${result.id}">Click!</>`
+          subject: 'TanyaJawab App- Activation Email',
+          html: `<b>Congratulation! Now you can activate your account now. Please click this link to activate it.</b><a href="${process.env.SMTP_URL}/auth/user-activation/${result.id}">Click!</>`
         }
 
         transporter.sendMail(mailOptions, function (error, info) {
@@ -58,7 +58,7 @@ module.exports = {
             return helper.response(
               res,
               200,
-              'Email verification is sent. Please check your email.'
+              'Email verification is sent. Please check your email right now!'
             )
           }
         })
