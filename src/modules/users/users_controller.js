@@ -3,6 +3,7 @@ const client = redis.createClient()
 
 const helper = require('../../helpers/helper')
 const usersModel = require('./users_model')
+const notificationModel = require('../notification/notification_model')
 
 module.exports = {
     searchUser: async (req, res) => {
@@ -60,12 +61,18 @@ module.exports = {
                 user_address: userAddress,
                 user_phone_number: userPhoneNumber
             }
+            const setData1 = {
+                user_id: req.decodeToken.user_id,
+                notification_body: `Your profile ${id} is updated successfully!`,
+                notification_type: 'profile'
+            }
             const result = await usersModel.getOneData(id)
             if (result.length === 0) {
                 return helper.response(res, 400, `The profile with user ${id} is not found. Please try again!`, null)
             } else {
                 const newResult = await usersModel.updateOneData(setData, id)
-                return helper.response(res, 200, `The profile with user ${id} is successfully updated!`, newResult)
+                const result2 = await notificationModel.createNotificationData(setData1)
+                return helper.response(res, 200, `The profile with user ${id} is successfully updated!`, [newResult, result2])
             }
         } catch (err) {
             console.log(err)
