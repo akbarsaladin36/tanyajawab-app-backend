@@ -2,6 +2,7 @@ const redis = require('redis')
 const client = redis.createClient()
 const helper = require('../../helpers/helper')
 const answerModel = require('./answer_model')
+const notificationModel = require('../notification/notification_model')
 
 module.exports = {
     addAnswer: async (req, res) => {
@@ -12,8 +13,14 @@ module.exports = {
                 question_id: questionId,
                 answer_text: answerBody
             }
+            const setData1 = {
+                user_id: req.decodeToken.user_id,
+                notification_body: `the user id ${req.decodeToken.user_id} is answered the question ${questionId} successfully!`,
+                notification_type: 'answer'
+            }
             const result = await answerModel.createAnswerData(setData)
-            return helper.response(res, 200, 'A first answer is successfully added! Wait until author find your answer and reply it.', result)
+            const result2 = await notificationModel.createNotificationData(setData1)
+            return helper.response(res, 200, 'A first answer is successfully added! Wait until author find your answer and reply it.', [result, result2])
         } catch (err) {
             console.log(err)
             return helper.response(res, 404, 'Bad Request', null)
@@ -23,17 +30,23 @@ module.exports = {
     updateAnswer: async (req, res) => {
         try {
             const { id } = req.params
-            const { answerBody } = req.body
+            const { answerBody, questionId } = req.body
             const setData = {
                 answer_text: answerBody,
                 answer_updated_at: new Date(Date.now())
+            }
+            const setData1 = {
+                user_id: req.decodeToken.user_id,
+                notification_body: `the user id ${req.decodeToken.user_id} is answered the question ${questionId} successfully!`,
+                notification_type: 'answer'
             }
             const result = await answerModel.getOneAnswerData(id)
             if(result.length === 0) {
                 return helper.response(res, 400, `Your answer for id${id} is not found. Please try again!`, null)
             } else {
                 const newResult = await answerModel.updateAnswerData(setData, id)
-                return helper.response(res, 200, `Your answer for id${id} is updated successfully!`, newResult)
+                const result2 = await notificationModel.createNotificationData(setData1)
+                return helper.response(res, 200, `Your answer for id${id} is updated successfully!`, [newResult, result2])
             }
         } catch (err) {
             console.log(err)

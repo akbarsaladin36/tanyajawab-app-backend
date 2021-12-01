@@ -47,9 +47,12 @@ SMTP_PASSWORD = <YOUR PASSWORD>
 1. Login and Register
 2. Get One User
 3. Search, Update and Delete User
-4. Get All Question 
+4. Get All Questions
 5. Create, Update, and Delete Question 
 6. Create, Update and Delete Answer
+7. Get All Notifications
+8. Get All Followers
+9. Add a Follower
 
 
 ## License
