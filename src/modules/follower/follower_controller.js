@@ -1,7 +1,6 @@
 const helper = require('../../helpers/helper')
 const followerModel = require('./follower_model')
 const notificationModel = require('../notification/notification_model')
-const usersModel = require('../users/users_model')
 
 module.exports = {
     allFollowers: async (req, res) => {
