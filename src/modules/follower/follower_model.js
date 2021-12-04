@@ -22,6 +22,13 @@ module.exports = {
             })
         })
     },
+    getOneFollowerData: (id) => {
+        return new Promise((resolve, reject) => {
+            connection.query('SELECT * FROM followers WHERE followers_id = ?', id, (error, result) => {
+                !error ? resolve(result) : reject(new Error(error))
+            })
+        })
+    },
     createFollowerData: (setData) => {
         return new Promise((resolve, reject) => {
             connection.query('INSERT INTO followers SET ?', setData, (error, result) => {
@@ -37,10 +44,18 @@ module.exports = {
             })
         })
     },
-    deleteOneFollowerData: (id) => {
+    deleteOneFollowerData: (userId, friendId) => {
         return new Promise((resolve, reject) => {
-            connection.query('DELETE FROM followers WHERE followers_id = ?', id, (error, result) => {
-                !error ? resolve(result) : reject(new Error(error))
+            connection.query('DELETE FROM followers WHERE user_id = ? AND friend_id = ?', [userId, friendId], (error, result) => {
+                if(!error){
+                    const newResult = {
+                        user_id: userId,
+                        friend_id: friendId
+                      }
+                      resolve(newResult)
+                } else {
+                    reject(new Error(error))
+                }
             })
         })
     }

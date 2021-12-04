@@ -12,6 +12,6 @@ Route.use('/users', usersRoutes)
 Route.use('/question', questionRoutes)
 Route.use('/answer', answerRoutes)
 Route.use('/notification', notificationRoutes)
-Route.use('/follow', followerRoutes)
+Route.use('/follower', followerRoutes)
 
 module.exports = Route

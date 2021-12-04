@@ -1,6 +1,7 @@
 const helper = require('../../helpers/helper')
 const followerModel = require('./follower_model')
 const notificationModel = require('../notification/notification_model')
+const usersModel = require('../users/users_model')
 
 module.exports = {
     allFollowers: async (req, res) => {
@@ -24,7 +25,7 @@ module.exports = {
 
     followOne: async (req, res) => {
         try {
-            const { friendId } = req.body
+            const { friendId } = req.query
             const setData = {
                 user_id: req.decodeToken.user_id,
                 friend_id: friendId,
@@ -38,6 +39,18 @@ module.exports = {
             const result = await followerModel.createFollowerData(setData)
             const result2 = await notificationModel.createNotificationData(setData1)
             return helper.response(res, 200, `You are followed friend from user id ${friendId}!`, [result, result2])
+        } catch (err) {
+            console.log(err)
+            return helper.response(res, 404, 'Bad Request', null)
+        }
+    },
+
+    unfollowOne: async (req, res) => {
+        try {
+            const { id } = req.params
+            const { friendId } = req.query
+            const result = await followerModel.deleteOneFollowerData(id, friendId)
+            return helper.response(res, 200, `You are unfollowing a friend id ${friendId} successfully!`, result)
         } catch (err) {
             console.log(err)
             return helper.response(res, 404, 'Bad Request', null)
