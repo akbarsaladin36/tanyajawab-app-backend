@@ -48,8 +48,14 @@ module.exports = {
         try {
             const { id } = req.params
             const { friendId } = req.query
+            const setData = {
+                user_id: req.decodeToken.user_id,
+                notification_body: `the user ${req.decodeToken.user_id} has unfollowed a user id ${friendId}!`,
+                notification_type: 'follower'
+            }
             const result = await followerModel.deleteOneFollowerData(id, friendId)
-            return helper.response(res, 200, `You are unfollowing a friend id ${friendId} successfully!`, result)
+            const result2 = await notificationModel.createNotificationData(setData)
+            return helper.response(res, 200, `You are unfollowing a friend id ${friendId} successfully!`, [result, result2])
         } catch (err) {
             console.log(err)
             return helper.response(res, 404, 'Bad Request', null)
