@@ -10,9 +10,9 @@ module.exports = {
         try {
             const result = await questionModel.getAllQuestionData()
             if(result.length > 0){
-                for(const e of result) {
-                    e.profileUser = await questionModel.getUserProfileData(e.user_id)
-                }
+                // for(const e of result) {
+                //     e.profileUser = await questionModel.getUserProfileData(e.user_id)
+                // }
                 client.set('getdata:all', JSON.stringify(result))
                 return helper.response(res, 200, 'Successfully showed all of question!', result)
             } else {
