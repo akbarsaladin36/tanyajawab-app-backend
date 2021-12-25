@@ -10,10 +10,6 @@ module.exports = {
             if(result.length === 0) {
                 return helper.response(res, 200, 'You are not have follower.', null)
             } else {
-                for(const e of result) {
-                    e.profileData = await followerModel.getUserProfileData(e.user_id)
-                    e.followersCount = await followerModel.getTotalFollowersData(e.user_id)
-                }
                 return helper.response(res, 200, `Show all followers data from user id ${id} successfully!`, result)
             }
         } catch (err) {

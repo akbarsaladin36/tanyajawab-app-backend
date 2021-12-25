@@ -25,10 +25,6 @@ module.exports = {
             const { id } = req.params
             const result = await questionModel.getOneQuestionData(id)
             if(result.length > 0){
-                for(const e of result) {
-                    e.profileUser = await questionModel.getUserProfileData(e.user_id)
-                    e.allAnswer = await questionModel.getAllAnswerDetail(e.question_id)
-                }
                 client.set(`getdata:${id}`, JSON.stringify(result))
                 return helper.response(res, 200, `Succesfully showed a question number ${id}!`, result)
             } else {

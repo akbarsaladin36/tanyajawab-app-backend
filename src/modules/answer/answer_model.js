@@ -1,6 +1,14 @@
 const connection = require('../../config/mysql')
 
 module.exports = {
+    getAllAnswerDataByQuestionId: (id) => {
+        return new Promise((resolve, reject) => {
+            connection.query('SELECT * FROM answers a JOIN users b ON b.user_id = a.user_id WHERE a.question_id = ?', id, (error, result) => {
+                !error ? resolve(result) : reject(new Error(error))
+            })
+        })
+    },
+
     getOneAnswerData: (id) => {
         return new Promise((resolve, reject) => {
             connection.query('SELECT * FROM answers WHERE answer_id = ?', id, (error, result) => {

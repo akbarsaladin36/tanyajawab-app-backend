@@ -3,7 +3,7 @@ const connection = require('../../config/mysql')
 module.exports = {
     getAllFollowerData: (id) => {
         return new Promise ((resolve, reject) => {
-            connection.query('SELECT * FROM followers WHERE user_id = ?', id, (error, result) => {
+            connection.query('SELECT * FROM followers a JOIN users b ON a.user_id = b.user_id WHERE a.user_id = ?', id, (error, result) => {
                 !error ? resolve(result) : reject(new Error(error))
             })
         })

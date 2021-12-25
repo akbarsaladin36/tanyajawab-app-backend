@@ -5,6 +5,22 @@ const answerModel = require('./answer_model')
 const notificationModel = require('../notification/notification_model')
 
 module.exports = {
+    getAllAnswer: async (req,res) => {
+        try {
+            const { id } = req.params
+            const result = await answerModel.getAllAnswerDataByQuestionId(id)
+            if(result.length > 0) {
+                client.set(`getData:${id}`, JSON.stringify(result))
+                return helper.response(res, 200, `All answers for the question id ${id} successfully appeared!`, result)
+            } else {
+                return helper.response(res, 400, `All answers for the question id ${id} is not found!`, null)
+            }
+        } catch (err) {
+            console.log(err)
+            return helper.response(res, 404, 'Bad Request', null)
+        }
+    },
+
     addAnswer: async (req, res) => {
         try {
             const { questionId, answerBody } = req.body
