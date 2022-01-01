@@ -35,6 +35,21 @@ module.exports = {
             return helper.response(res, 404, 'Bad Request', null)
         }
     },
+    allQuestionByUserId: async (req, res) => {
+        try {
+            const { id } = req.params
+            const result = await questionModel.getAllQuestionByUserIdData(id)
+            if(result.length > 0) {
+                client.set('getdata:all', JSON.stringify(result))
+                return helper.response(res, 200, `Successfully showed all question data by user id ${id}!`, result)
+            } else {
+                return helper.response(res, 400, `All question data by user id ${id}`, null)
+            }
+        } catch (err) {
+            console.log(err)
+            return helper.response(res, 404, 'Bad Request', null)
+        }
+    },
     createQuestion: async (req, res) => {
         try {
             const { questionTitle, questionBody, questionTag } = req.body

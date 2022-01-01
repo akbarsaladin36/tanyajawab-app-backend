@@ -9,6 +9,14 @@ module.exports = {
         })
     },
 
+    getAllAnswerByUserId: (id) => {
+        return new Promise((resolve, reject) => {
+            connection.query('SELECT * FROM answers a JOIN questions b ON b.question_id = a.question_id WHERE a.user_id = ?', id, (error, result) => {
+                !error ? resolve(result) : reject(new Error(error))
+            })
+        }) 
+    },
+
     getOneAnswerData: (id) => {
         return new Promise((resolve, reject) => {
             connection.query('SELECT * FROM answers WHERE answer_id = ?', id, (error, result) => {

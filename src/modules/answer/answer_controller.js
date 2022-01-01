@@ -10,10 +10,26 @@ module.exports = {
             const { id } = req.params
             const result = await answerModel.getAllAnswerDataByQuestionId(id)
             if(result.length > 0) {
-                client.set(`getData:${id}`, JSON.stringify(result))
+                client.set(`getdata:${id}`, JSON.stringify(result))
                 return helper.response(res, 200, `All answers for the question id ${id} successfully appeared!`, result)
             } else {
                 return helper.response(res, 400, `All answers for the question id ${id} is not found!`, null)
+            }
+        } catch (err) {
+            console.log(err)
+            return helper.response(res, 404, 'Bad Request', null)
+        }
+    },
+
+    getAllAnswerByUser: async (req, res) => {
+        try {
+            const { id } = req.params
+            const result = await answerModel.getAllAnswerByUserId(id)
+            if(result.length > 0) {
+                client.set(`getdata:${id}`, JSON.stringify(result))
+                return helper.response(res, 200, `All answer by user id ${id} is successfully showed!`, result)
+            } else {
+                return helper.response(res, 400, `All answer data by user id ${id} is not found!`, null)
             }
         } catch (err) {
             console.log(err)
