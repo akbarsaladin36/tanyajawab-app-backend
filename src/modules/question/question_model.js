@@ -11,7 +11,7 @@ module.exports = {
 
     getAllQuestionByUserIdData: (id) => {
         return new Promise((resolve, reject) => {
-            connection.query('SELECT * FROM questions WHERE user_id = ?', id, (error, result) => {
+            connection.query('SELECT * FROM questions a JOIN users b ON a.user_id = b.user_id WHERE a.user_id = ?', id, (error, result) => {
                 !error ? resolve(result) : reject(new Error(error))
             })
         })
